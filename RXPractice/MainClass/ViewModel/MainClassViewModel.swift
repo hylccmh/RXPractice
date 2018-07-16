@@ -11,13 +11,14 @@ import RxSwift
 import Moya
 import ObjectMapper
 import HandyJSON
+import RxCocoa
 
 class MainClassViewModel {
 
     private let provider = MoyaProvider<APIService>()
     let disposeBag = DisposeBag()
-    var dataSource = Variable([MainClassModelMapObject_sub]())
-    var networkError = Variable(Error.self)
+    var dataSource = BehaviorRelay<[MainClassModelMapObject_sub]>(value:[])
+    var networkError = BehaviorRelay(value: Error.self)
 }
 
 //MARK: -- 网络
@@ -29,12 +30,12 @@ extension  MainClassViewModel {
             
             switch event {
             case let  .next(classModel):
-                self.dataSource.value = classModel.data
                 print("ObjectMapper -- 加载网络成功")
+                self.dataSource.accept(classModel.data)
                 
             case let .error( error):
                 print("error:", error)
-                self.networkError.value = error as! Error.Protocol
+                self.networkError.accept(error as! Error.Protocol)
             case .completed: break
             }
         }).disposed(by: self.disposeBag)
@@ -52,7 +53,7 @@ extension  MainClassViewModel {
                 
             case let .error( error):
                 print("error:", error)
-                self.networkError.value = error as! Error.Protocol
+               self.networkError.accept(error as! Error.Protocol)
             case .completed: break
             }
         }).disposed(by: self.disposeBag)

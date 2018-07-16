@@ -66,27 +66,26 @@ class MainClassViewController: UIViewController {
         ).disposed(by: self.disposeBag)
         
         viewModel.getClassListWithMapObject()
-    
+
     }
     
     //初始化和tableView相关的数据
     func initTableViewData(){
         
         //cell
-        viewModel.dataSource.asObservable()
-            .bind(to: tableView.rx.items) { (tableView, row, element) in
-                let cell = tableView.dequeueReusableCell(withIdentifier: "MainClassTableViewCell", for: IndexPath(row: row, section: 0)) as! MainClassTableViewCell
-                
-                 cell.setModel(model: element)
-                // configure cell
-                return cell
+
+        viewModel.dataSource.bind(to: tableView.rx.items) { (tableView, row, element) in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MainClassTableViewCell", for: IndexPath(row: row, section: 0)) as! MainClassTableViewCell
+            
+            cell.setModel(model: element)
+            // configure cell
+            return cell
             }
             .disposed(by: disposeBag)
         
-        
         //tableview select
         tableView.rx
-            .modelSelected(MainClassModel_sub.self)
+            .modelSelected(MainClassModelMapObject_sub.self)
             .subscribe(onNext:{ model in
             
                 print(model)
@@ -118,7 +117,6 @@ extension MainClassViewController : UITableViewDelegate{
     {
         let cellModel = self.viewModel.dataSource.value[IndexPat.row]
         print("count = ",self.viewModel.dataSource.value.count,"name = ",cellModel.name ?? "","index == ",IndexPat.row)
-        
         return 216
     }
     
