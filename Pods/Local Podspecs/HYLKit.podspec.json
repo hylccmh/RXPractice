@@ -1,0 +1,22 @@
+{
+  "name": "HYLKit",
+  "version": "0.1.1",
+  "summary": "A short description of HYLKit.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://gitlab.com/huyunlong/HYLKit.git",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "894457665@qq.com": "894457665@qq.com"
+  },
+  "source": {
+    "git": "https://gitlab.com/huyunlong/HYLKit.git",
+    "tag": "0.1.1"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "HYLKit/Classes/**/*"
+}
